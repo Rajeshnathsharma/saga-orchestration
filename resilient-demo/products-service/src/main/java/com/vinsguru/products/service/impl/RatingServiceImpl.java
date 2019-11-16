@@ -4,6 +4,7 @@ import com.vinsguru.dto.ProductRatingDTO;
 import com.vinsguru.products.service.RatingService;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class RatingServiceImpl implements RatingService {
     private RestTemplate restTemplate;
 
     @Override
-    @Bulkhead(name = "ratingService", fallbackMethod = "getFallbackRatings", type = Bulkhead.Type.SEMAPHORE)
+    @RateLimiter(name = "ratingService")
+   // @Bulkhead(name = "ratingService", fallbackMethod = "getFallbackRatings", type = Bulkhead.Type.SEMAPHORE)
     public ProductRatingDTO getRatings(int productId) {
         String url = this.ratingServiceUrl + "/" + productId;
         ProductRatingDTO productRatingDTO = new ProductRatingDTO();

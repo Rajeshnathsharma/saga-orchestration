@@ -8,8 +8,9 @@ server:
 rating:
   service:
     url: http://localhost:8081/v1/ratings
-resilience4j.bulkhead:
+resilience4j.ratelimiter:
   instances:
     ratingService:
-      maxConcurrentCalls: 10
-      maxWaitDuration: 10ms
+      limitForPeriod: 6
+      limitRefreshPeriod: 10s
+      timeoutDuration: 3s

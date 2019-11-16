@@ -1,0 +1,6 @@
+resilience4j.ratelimiter:
+  instances:
+    stockService:
+      limitForPeriod: 1
+      limitRefreshPeriod: 5s
+      timeoutDuration: 0s
